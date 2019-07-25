@@ -1,4 +1,5 @@
-/* 
+
+/*
  * File:   Hello_World_main.c
  * Author: AutonomousSystemsLab
  *
@@ -61,6 +62,11 @@ void PrintEvent(Event event)
     case NAV_TIMER_EXPIRED:
         printf("Event:  NAV_TIMER_EXPIRED\r\n");
         break;
+    case STALL:
+        printf("Event: STALLING\r\n");
+        default:
+            printf("Unknown Event");
+
 
     }
 
@@ -101,4 +107,5 @@ int main(void)
 
     return (EXIT_SUCCESS);
 }
+
 
