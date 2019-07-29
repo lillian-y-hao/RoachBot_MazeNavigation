@@ -10,8 +10,8 @@
 #define DEBOUNCE_TIMER 15 //select a timer to be the debounce timer
 #define DEBOUNCE_PERIOD 30 //in milliseconds, the duration of the debounce period
 
-#define LIGHT_THRESHOLD 800 //The threshold between light and darkness - you may need to change this!
-const int stallThreshold = 10;
+#define LIGHT_THRESHOLD 480 //The threshold between light and darkness - you may need to change this!
+const int stallThreshold = 5;
 int stallCount = 0;
 
 Event CheckForAllEvents(void) {
@@ -21,6 +21,7 @@ Event CheckForAllEvents(void) {
     if (returnEvent != NO_EVENT) return returnEvent;
 
     returnEvent = CheckForBumperEvents();
+    if (returnEvent != NO_EVENT) return returnEvent;
     if (returnEvent != NO_EVENT) return returnEvent;
 
     returnEvent = CheckForStallEvents();
@@ -61,7 +62,7 @@ Event CheckForStallEvents(void) {
 Event CheckForTimerEvents(void) {
     static char previous_timer_state = TIMER_NOT_ACTIVE;
     char current_timer_state = TIMERS_IsTimerActive(NAV_TIMER);
-
+    char current_timer_state2 = TIMERS_IsTimerActive(A_TIMER);
 
     if (previous_timer_state != current_timer_state) {
         previous_timer_state = current_timer_state;
@@ -69,9 +70,25 @@ Event CheckForTimerEvents(void) {
         if (current_timer_state == TIMER_NOT_ACTIVE) return NAV_TIMER_EXPIRED;
     }
 
+
     //if we got this far, there was no event
     return NO_EVENT;
 }
+Event CheckForTimerAEvents(void) {
+    static char previous_timer_state = TIMER_NOT_ACTIVE;
+    char current_timer_state2 = TIMERS_IsTimerActive(A_TIMER);
+
+    if (previous_timer_state != current_timer_state2) {
+        previous_timer_state = current_timer_state2;
+
+        if (current_timer_state2 == TIMER_NOT_ACTIVE) return A_TIMER_EXPIRED;
+    }
+
+
+    //if we got this far, there was no event
+    return NO_EVENT;
+}
+
 
 Event CheckForBumperEvents(void) {
     static char previous_fl_bumper_state = BUMPER_NOT_TRIPPED;
