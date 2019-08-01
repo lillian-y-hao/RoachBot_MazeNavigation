@@ -20,8 +20,6 @@ typedef enum {
     NO_EVENT,
     FRONT_RIGHT_BUMP_PRESSED,
     FRONT_LEFT_BUMP_PRESSED,
-    //BOTH_BUMP_PRESSED,
-    //BOTH_BUMP_RELEASED,
     REAR_RIGHT_BUMP_PRESSED,
     REAR_LEFT_BUMP_PRESSED,
     FRONT_RIGHT_BUMP_RELEASED,
@@ -31,7 +29,8 @@ typedef enum {
     ENTERED_DARK,
     ENTERED_LIGHT,
     NAV_TIMER_EXPIRED,
-            STALL,
+    STALL,
+    //used for reverse case if both bumpers pressed
 } Event;
 
 
