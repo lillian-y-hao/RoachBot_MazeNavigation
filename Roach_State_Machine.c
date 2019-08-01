@@ -5,7 +5,10 @@
 #include "roach.h"
 #include "Roach_State_Machine.h"
 #define NAV_TIMER 1
-const int stallThreshold = 30;
+const int stallThreshold = 3;
+const int Roach_LeftMtrSpeed = 75
+const int Roach_RighttMtrSpeed = 75
+
 //a list of states that this SM uses:
 
 enum {
@@ -14,7 +17,6 @@ enum {
     Left,
     Hiding,
     Reversing,
-
 };
 
 int current_state;
@@ -26,9 +28,9 @@ int stallCount = 0;
  * (that is, the actions on the arrow from the black dot in the SM diagram)*/
 void Initialize_RoachStateMachine(void) {
     current_state = Forward;
-    Roach_LeftMtrSpeed(75);
-    Roach_RightMtrSpeed(75);
-    TIMERS_InitTimer(NAV_TIMER, 900);
+    Roach_LeftMtrSpeed(Roach_LeftMtrSpeed);
+    Roach_RightMtrSpeed(Roach_RighttMtrSpeed);
+    TIMERS_InitTimer(NAV_TIMER, 800);
     //seed rand:
     srand(Roach_LightLevel());
 };
@@ -40,16 +42,10 @@ void Run_RoachStateMachine(Event event) {
     switch (current_state) {
         case Forward:
             printf("Current state = Forward");
-//            if (event == FRONT_LEFT_BUMP_PRESSED && event == FRONT_RIGHT_BUMP_PRESSED) {
-//                printf("Current state = Left");
-//                TIMERS_InitTimer(NAV_TIMER, 200);
-//                Roach_LeftMtrSpeed(-75);
-//                Roach_RightMtrSpeed(75);
-//                current_state = Left;
-//                 }
+
             if (event == FRONT_RIGHT_BUMP_PRESSED) {
-                Roach_LeftMtrSpeed(-75);
-                Roach_RightMtrSpeed(75);
+                Roach_LeftMtrSpeed(-Roach_LeftMtrSpeed);
+                Roach_RightMtrSpeed(Roach_RighttMtrSpeed);
                 printf("Current state = Left");
                 TIMERS_InitTimer(NAV_TIMER, 150);
                 current_state = Left;
@@ -59,8 +55,8 @@ void Run_RoachStateMachine(Event event) {
                 Roach_RightMtrSpeed(0);
                 printf("Current state = Right");
                 TIMERS_InitTimer(NAV_TIMER, 250);
-                Roach_LeftMtrSpeed(75);
-                Roach_RightMtrSpeed(-75);
+                Roach_LeftMtrSpeed(Roach_LeftMtrSpeed);
+                Roach_RightMtrSpeed(-Roach_RighttMtrSpeed);
                 current_state = Right;
             }
             if(event == STALL){
@@ -76,13 +72,14 @@ void Run_RoachStateMachine(Event event) {
             }
 
             break;
+
         case Left:
             if (event == NAV_TIMER_EXPIRED) {
                 Roach_LeftMtrSpeed(0);
                 Roach_RightMtrSpeed(0);
                 current_state = Forward;
-                Roach_LeftMtrSpeed(75);
-                Roach_RightMtrSpeed(75);
+                Roach_LeftMtrSpeed(Roach_LeftMtrSpeed);
+                Roach_RightMtrSpeed(Roach_RighttMtrSpeed);
                 TIMERS_InitTimer(NAV_TIMER, 400);
             }
             if (event == ENTERED_DARK) {
@@ -94,8 +91,8 @@ void Run_RoachStateMachine(Event event) {
 
         case Reversing:
                 if(event == NAV_TIMER_EXPIRED){
-                    Roach_LeftMtrSpeed(75);
-                    Roach_RightMtrSpeed(75);
+                    Roach_LeftMtrSpeed(Roach_LeftMtrSpeed);
+                    Roach_RightMtrSpeed(Roach_RighttMtrSpeed);
                     current_state = Forward;
                 }
                 if (event == ENTERED_DARK) {
@@ -106,24 +103,17 @@ void Run_RoachStateMachine(Event event) {
             break;
 
         case Right:
-//            if (event == FRONT_LEFT_BUMP_PRESSED && event == FRONT_RIGHT_BUMP_PRESSED) {
-//                printf("Current state = Left");
-//                TIMERS_InitTimer(NAV_TIMER, 200);
-//                Roach_LeftMtrSpeed(-75);
-//                Roach_RightMtrSpeed(75);
-//                current_state = Left;
-//            }
             if (event == FRONT_RIGHT_BUMP_PRESSED) {
-                Roach_LeftMtrSpeed(-75);
-                Roach_RightMtrSpeed(75);
+                Roach_LeftMtrSpeed(-Roach_LeftMtrSpeed);
+                Roach_RightMtrSpeed(Roach_RighttMtrSpeed);
                 printf("Current state = Left");
                 TIMERS_InitTimer(NAV_TIMER, 200);
                 current_state = Left;
             }
             if (event == NAV_TIMER_EXPIRED) {
                 current_state = Forward;
-                Roach_LeftMtrSpeed(75);
-                Roach_RightMtrSpeed(75);
+                Roach_LeftMtrSpeed(Roach_LeftMtrSpeed);
+                Roach_RightMtrSpeed(Roach_RighttMtrSpeed);
                 TIMERS_InitTimer(NAV_TIMER, 1200);
             }
             if (event == ENTERED_DARK) {
@@ -131,7 +121,6 @@ void Run_RoachStateMachine(Event event) {
                 Roach_LeftMtrSpeed(0);
                 Roach_RightMtrSpeed(0);
             }
-
             break;
 
         case Hiding:
