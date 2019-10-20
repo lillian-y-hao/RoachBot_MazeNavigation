@@ -6,7 +6,7 @@
 #include "Roach_State_Machine.h"
 #define NAV_TIMER 1
 const int stallThreshold = 3;
-const int Speed = 75
+const int Speed = 75;
 
 //a list of states that this SM uses:
 
@@ -25,6 +25,7 @@ int stallCount = 0;
  * At a minimum, this requires setting the first state.
  * Also, execute any actions associated with initializing the SM
  * (that is, the actions on the arrow from the black dot in the SM diagram)*/
+
 void Initialize_RoachStateMachine(void) {
     current_state = Forward;
     Roach_LeftMtrSpeed(Speed);
@@ -37,11 +38,12 @@ void Initialize_RoachStateMachine(void) {
 /*
  * @briefThis function feeds newly detected events to the roach state machine.
  * @param event:  The most recently detected event*/
+
 void Run_RoachStateMachine(Event event) {
     switch (current_state) {
+            
         case Forward:
             printf("Current state = Forward");
-
             if (event == FRONT_RIGHT_BUMP_PRESSED) {
                 Roach_LeftMtrSpeed(-Speed);
                 Roach_RightMtrSpeed(Speed);
@@ -69,7 +71,6 @@ void Run_RoachStateMachine(Event event) {
                 Roach_LeftMtrSpeed(0);
                 Roach_RightMtrSpeed(0);
             }
-
             break;
 
         case Left:
