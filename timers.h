@@ -19,8 +19,6 @@
 #ifndef timers_H
 #define timers_H
 
-
-
 #define TIMER_ACTIVE 1
 #define TIMER_EXPIRED 1
 
