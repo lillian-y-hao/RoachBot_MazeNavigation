@@ -1,7 +1,7 @@
 
 /*
- * File:   Hello_World_main.c
- * Author: AutonomousSystemsLab
+ * File:   SM_main.c
+ * Author: Lillian Hao
  *
  * Created on July 5, 2019, 1:32 PM
  */
@@ -76,7 +76,6 @@ void PrintEvent(Event event)
 int main(void)
 {
     // <editor-fold defaultstate="collapsed" desc="//Initialization code (BOARD_Init(), etc)">
-
 
     //These calls configure the Pic32 so that it can interact with the Roach hardware
     BOARD_Init();
