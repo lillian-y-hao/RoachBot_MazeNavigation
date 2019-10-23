@@ -2,7 +2,6 @@
 #include "roach.h"
 #include "timers.h"
 #include "serial.h"
-
 #include <stdio.h>
 
 
@@ -13,6 +12,7 @@
 #define LIGHT_THRESHOLD 480 //The threshold between light and darkness - you may need to change this!
 const int stallThreshold = 3;
 int stallCount = 0;
+int eventCount = 0;
 
 Event CheckForAllEvents(void) {
     Event returnEvent = NO_EVENT;
