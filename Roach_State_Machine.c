@@ -40,10 +40,11 @@ void Initialize_RoachStateMachine(void) {
  * @param event:  The most recently detected event*/
 
 void Run_RoachStateMachine(Event event) {
+    
     switch (current_state) {
             
         case Forward:
-            printf("Current state = Forward");
+            printf("current_state = Forward");
             if (event == FRONT_RIGHT_BUMP_PRESSED) {
                 Roach_LeftMtrSpeed(-Speed);
                 Roach_RightMtrSpeed(Speed);
@@ -74,6 +75,7 @@ void Run_RoachStateMachine(Event event) {
             break;
 
         case Left:
+            printf("current_state = Left");
             if (event == NAV_TIMER_EXPIRED) {
                 Roach_LeftMtrSpeed(0);
                 Roach_RightMtrSpeed(0);
