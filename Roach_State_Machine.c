@@ -12,8 +12,8 @@ const int Speed = 75;
 
 enum {
     Forward,
-    Right,
     Left,
+    Right,
     Hiding,
     Reversing,
 };
@@ -24,20 +24,23 @@ int stallCount = 0;
 /* This function initializes the roach state machine.
  * At a minimum, this requires setting the first state.
  * Also, execute any actions associated with initializing the SM
- * (that is, the actions on the arrow from the black dot in the SM diagram)*/
+ * (that is, the actions on the arrow from the black dot in the SM diagram)
+ */
 
 void Initialize_RoachStateMachine(void) {
     current_state = Forward;
     Roach_LeftMtrSpeed(Speed);
     Roach_RightMtrSpeed(Speed);
     TIMERS_InitTimer(NAV_TIMER, 800);
+    
     //seed rand:
-    srand(Roach_LightLevel());
+        srand(Roach_LightLevel());
 };
 
 /*
  * @briefThis function feeds newly detected events to the roach state machine.
- * @param event:  The most recently detected event*/
+ * @param event:  The most recently detected event
+ */
 
 void Run_RoachStateMachine(Event event) {
     
